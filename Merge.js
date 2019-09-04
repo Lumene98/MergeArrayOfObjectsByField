@@ -9,27 +9,27 @@ export default function merge(
     [key: string]: Array<Object>
   } = groupBy(array, key);
 
-  const updatedArray: Array<Array<Object> | any> = Object.values(
+  const updatedArray: Array<Array<Object | any>> = Object.values(
     grouped
   ); /* here we get only the values of the Object because we just need the divide Arrays */
 
-  return unify && 
+  return unify
     ? updatedArray.map<Array<Array<Object>>>(( /* here we merge the Array of Objects into a single Object using the unify parameter */
-        el 
-      ) =>
-        el.length > 1
-          ? {
-              ...el[0],
-              [unify]: el.reduce(
-                (arr, obj) =>
-                  Array.isArray(obj[unify])
-                    ? [...arr, ...obj[unify]]
-                    : [...arr, obj[unify]],
-                []
-              )
-            }
-          : el[0]
-      )
+      el
+    ) =>
+      el.length > 1
+        ? {
+          ...el[0],
+          [unify]: el.reduce(
+            (arr, obj) =>
+              Array.isArray(obj[unify])
+                ? [...arr, ...obj[unify]]
+                : [...arr, obj[unify]],
+            []
+          )
+        }
+        : el[0]
+    )
     : updatedArray;
 }
 
@@ -47,7 +47,7 @@ export default function merge(
     
 */
 const groupBy = (rx: Array<Object>, key: string) =>
-  rx.reduce(function(rv, x) {
+  rx.reduce(function (rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
     return rv;
   }, {});
